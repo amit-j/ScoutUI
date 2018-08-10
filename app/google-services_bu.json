@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1090144583253",
+    "firebase_url": "https://scoutui-cecs453.firebaseio.com",
+    "project_id": "scoutui-cecs453",
+    "storage_bucket": "scoutui-cecs453.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1090144583253:android:61c247fbf7e8d1a5",
+        "android_client_info": {
+          "package_name": "com.example.sarve.scoutui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1090144583253-3bm4djk9on5pan64fm52ibh9knpgrrls.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sarve.scoutui",
+            "certificate_hash": "b34135b01106b883f1959a8fd2600a620caafdd3"
+          }
+        },
+        {
+          "client_id": "1090144583253-uch19iea7on6i0btrfvrposorkkvcljh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD16gLbULK2nD8BFnWj14Dc3HqQw6Mf7Uk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1090144583253-uch19iea7on6i0btrfvrposorkkvcljh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

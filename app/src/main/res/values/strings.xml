@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">ScoutUI</string>
+    <string name="scout">SCOUT</string>
+    <string name="signin">SIGN IN</string>
+    <string name="signup">SIGN UP</string>
+    <string name="initialSetup">INITIAL SETUP</string>
+    <string name="initialSetupContent">This application has been designed to support multiple games.
+        Users can choose a specific game and get the list of players for that game.
+        In the following screen choose a game for which you wish to get the players list.
+        You can change the game in user profile screen later.</string>
+    <string name="chooseGame">Choose A Game Below</string>
+    <string name="welcomeUser">Welcome User</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
+    <string name="tab_text_1">PROFILE</string>
+    <string name="tab_text_2">MATCHES</string>
+    <string name="tab_text_3">RATING</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="gameProfileSetup">One Time Game Profile Setup</string>
+    <string name="gamerID">Gamer ID</string>
+    <string name="yourPersonalPreference">Your Personal Preference</string>
+    <string name="profileInfo">The below ratings are calculated based on the ratings provided by your partners based on your game play.
+        These data are read-only. Below rating gets updated as and when you get rated by your partners.</string>
+    <string name="overallRating">Overall Rating:</string>
+    <string name="additionalParameters">Additional Parameters:</string>
+    <string name="teamPlayer">Team Player:</string>
+    <string name="zeroPercent">0%</string>
+    <string name="camper">Camper:</string>
+    <string name="striker">Striker:</string>
+    <string name="lookForMatches">Look For Matches</string>
+    <string name="changeGame">Change Game</string>
+    <string name="logOut">Log Out</string>
+    <string name="totalMatches">Total Matches:</string>
+    <string name="totalMatchesValue">1</string>
+    <string name="matchOverAllRatingValue">70%</string>
+    <string name="overAllRatingValue">0%</string>
+    <string name="teamPlayerValue">0%</string>
+    <string name="camperValue">0%</string>
+    <string name="strikerValue">0%</string>
+    <string name="matchUserName">User Name:</string>
+    <string name="matchUserNameValue">James Bond</string>
+    <string name="matchLanguage">Preferred Language:</string>
+    <string name="matchLanguageValue">English</string>
+    <string name="matchTime">Preferred Availability:</string>
+    <string name="matchTimeValue">18 GMT</string>
+    <string name="matchAge">Preferred Age:</string>
+    <string name="matchAgeValue">25</string>
+    <string name="matchInfo">The below ratings are provided by this users old partner based on the users game play.</string>
+    <string name="matchTeamPlayerValue">80%</string>
+    <string name="matchCamperValue">60%</string>
+    <string name="matchStrikerValue">70%</string>
+    <string name="showGamerID">Show Gamer ID</string>
+    <string name="previousMatch">Previous Match</string>
+    <string name="nextMatch">Next Match</string>
+    <string name="ratePlayerInfo">Rate Players</string>
+    <string name="ratePlayerName">James Bond</string>
+    <string name="ratePlayerName2">Jason</string>
+
+
+
+
+    <string-array name="age_groups">
+        <item>0-10</item>
+        <item>11-16</item>
+        <item>16-21</item>
+        <item>21+</item>
+    </string-array>
+
+
+</resources>

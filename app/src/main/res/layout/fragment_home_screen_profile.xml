@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context=".HomeScreen$PlaceholderFragment">
+
+    <RelativeLayout
+        android:id="@+id/gameProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:layout_width="112dp"
+            android:layout_height="110dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="26dp"
+            android:src="@drawable/game_logo1" />
+
+        <TextView
+            android:textColor="@android:color/white"
+            android:layout_width="178dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="28dp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="25dp"
+            android:fontFamily="@font/iceland"
+            android:text="Game One"
+            android:textAppearance="@android:style/TextAppearance.Material.Button"
+            android:textSize="40dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/gameProfile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/profileInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="251dp"
+            android:layout_marginVertical="8dp"
+            android:fontFamily="@font/iceland"
+            android:text="@string/profileInfo"
+            android:textAlignment="center"
+            android:textStyle="italic"
+            android:textColor="@android:color/white"
+            android:textSize="15dp" />
+
+        <LinearLayout
+            android:id="@+id/overAllRatingLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/profileInfo">
+            <TextView
+                android:id="@+id/overAllRating"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/iceland"
+                android:text="@string/overallRating"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="50dp" />
+
+            <EditText
+                android:id="@+id/overAllRatingValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions"
+                android:text="@string/overAllRatingValue"
+                android:fontFamily="@font/iceland"
+                android:layout_marginTop="10dp"
+                android:textSize="50dp"
+                android:textColor="@android:color/white"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/additionalParameters"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/overAllRatingLayout"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/iceland"
+            android:text="@string/additionalParameters"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="30dp" />
+
+        <LinearLayout
+            android:id="@+id/teamPlayerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/additionalParameters">
+            <TextView
+                android:id="@+id/teamPlayer"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/iceland"
+                android:text="@string/teamPlayer"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="25dp" />
+
+            <EditText
+                android:id="@+id/teamPlayerValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="50dp"
+                android:fontFamily="@font/iceland"
+                android:inputType="textNoSuggestions"
+                android:text="@string/teamPlayerValue"
+                android:textColor="@android:color/white"
+                android:textSize="25dp"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/camperLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/teamPlayerLayout">
+            <TextView
+                android:id="@+id/camper"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/iceland"
+                android:text="@string/camper"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="25dp" />
+
+            <EditText
+                android:id="@+id/camperValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="95dp"
+                android:fontFamily="@font/iceland"
+                android:inputType="textNoSuggestions"
+                android:text="@string/camperValue"
+                android:textColor="@android:color/white"
+                android:textSize="25dp"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/strikerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/camperLayout">
+            <TextView
+                android:id="@+id/striker"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/iceland"
+                android:text="@string/striker"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="25dp" />
+
+            <EditText
+                android:id="@+id/strikerValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="105dp"
+                android:fontFamily="@font/iceland"
+                android:inputType="textNoSuggestions"
+                android:text="@string/strikerValue"
+                android:textColor="@android:color/white"
+                android:textSize="25dp"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnLookForMatches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/strikerLayout"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/iceland"
+            android:text="@string/lookForMatches"
+            android:textAppearance="@android:style/TextAppearance.Material.Button"
+            android:textSize="24sp"
+            android:layout_marginTop="50dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnLookForMatches"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/btnChangeGame"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/iceland"
+                android:text="@string/changeGame"
+                android:textAppearance="@android:style/TextAppearance.Material.Button"
+                android:textSize="24sp"
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp"/>
+
+            <Button
+                android:id="@+id/btnLogOut"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/iceland"
+                android:text="@string/logOut"
+                android:textAppearance="@android:style/TextAppearance.Material.Button"
+                android:textSize="24sp"
+                android:layout_weight="1"
+                android:layout_marginRight="8dp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
