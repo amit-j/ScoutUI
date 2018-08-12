@@ -1,5 +1,6 @@
 package com.example.sarve.scoutui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -22,15 +23,21 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sarve.scoutui.Model.Globals;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
 
@@ -49,10 +56,16 @@ public class HomeScreenProfile extends Fragment {
                      txtGamename;
 
     private ImageView gamePicture;
+    ProgressDialog mDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        mDialog = new ProgressDialog(HomeScreenProfile.this.getActivity());
+        mDialog.setMessage("Please wait");
+        mDialog.setProgress(0);
+
         View rootView = inflater.inflate(R.layout.fragment_home_screen_profile, container, false);
 
         btnLookForMatches =  rootView.findViewById(R.id.btnLookForMatches);
@@ -79,14 +92,48 @@ public class HomeScreenProfile extends Fragment {
 
         displayProfileData();
 
+
+
         return rootView;
+
+
+
     }
 
 
+    /*private void test(){
+
+        CollectionReference collection = mFirestore.collection("user_rankings/pubg/rankings");
+    Query q =       collection.whereLessThan("total_rank",70);
+    q.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        @Override
+        public void onSuccess(QuerySnapshot snapshots) {
+
+
+            for(DocumentSnapshot document:snapshots.getDocuments()) {
+
+                Toast.makeText(HomeScreenProfile.this.getActivity(), "User:"+document.getId(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(HomeScreenProfile.this.getActivity(), e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+            );
+
+
+    }
+*/
+
     private void displayProfileData(){
 
-        CollectionReference collection = mFirestore.collection("users/"+username+"/gamer_profiles");
-        collection.document(game).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        CollectionReference collection = mFirestore.collection("user_rankings/"+game+"/rankings");
+        collection.document(username).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -110,6 +157,8 @@ public class HomeScreenProfile extends Fragment {
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
+
+                mDialog.setProgress(0);
             }
 
         });

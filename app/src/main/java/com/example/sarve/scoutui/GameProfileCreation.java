@@ -181,17 +181,7 @@ public class GameProfileCreation extends AppCompatActivity {
             newProfile.put(Globals.GAMERID_KEY, gamerID);
             newProfile.put(Globals.GAMER_LANGUAGE_PREF, Language);
             newProfile.put(Globals.GAMER_AGE_PREF, ageGroup);
-            newProfile.put(Globals.GAMER_TIME_PREF, availableTime);
-            newProfile.put("rank_var_1_avg", "0");
-            newProfile.put("rank_var_1_positive", "0");
-            newProfile.put("rank_var_1_total", "0");
-            newProfile.put("rank_var_2_avg", "0");
-            newProfile.put("rank_var_2_positive", "0");
-            newProfile.put("rank_var_2_total", "0");
-            newProfile.put("rank_var_3_avg", "0");
-            newProfile.put("rank_var_3_positive", "0");
-            newProfile.put("rank_var_3_total", "0");
-            newProfile.put("player_rating", "0");
+
 
 
             gameProfile.document(userName + "/gamer_profiles/"+gameName).set(newProfile)
@@ -200,6 +190,8 @@ public class GameProfileCreation extends AppCompatActivity {
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(GameProfileCreation.this, "Profile saved.",
                                     Toast.LENGTH_SHORT).show();
+                            createRankings();
+
                             goToHomeScreen();
 
 
@@ -227,6 +219,61 @@ public class GameProfileCreation extends AppCompatActivity {
 
     }
 
+
+
+    private void createRankings(){
+        boolean isSuccessful;
+        try {
+
+
+
+            // Get a reference to the restaurants collection
+            CollectionReference gameProfile = mFirestore.collection("user_rankings/"+gameName+"/rankings");
+
+            Map<String, Object> newProfile = new HashMap<>();
+            newProfile.put("rank_var_1_avg", 0);
+            newProfile.put("rank_var_1_positive", 0);
+            newProfile.put("rank_var_1_total", 0);
+            newProfile.put("rank_var_2_avg", 0);
+            newProfile.put("rank_var_2_positive", 0);
+            newProfile.put("rank_var_2_total", 0);
+            newProfile.put("rank_var_3_avg", 0);
+            newProfile.put("rank_var_3_positive", 0);
+            newProfile.put("rank_var_3_total", 0);
+            newProfile.put("player_rating", 0);
+
+
+            gameProfile.document(userName).set(newProfile)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                        //    Toast.makeText(GameProfileCreation.this, "Profile saved.",
+                              //      Toast.LENGTH_SHORT).show();
+                          //  goToHomeScreen();
+
+
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(GameProfileCreation.this, "ERROR saving profile." +e.toString(),
+                                    Toast.LENGTH_SHORT).show();
+                            mDialog.dismiss();
+
+
+                        }
+                    });
+
+
+        }
+        catch (Exception ex){
+            Toast.makeText(GameProfileCreation.this, "Something went wrong, Please try again later.", Toast.LENGTH_SHORT).show();
+        }
+
+
+
+    }
 
 
     private void goToHomeScreen(){
