@@ -121,8 +121,7 @@ public class GameProfileCreation extends AppCompatActivity {
                         goToHomeScreen();
                     }
                     else{
-                        Toast.makeText(GameProfileCreation.this, "Profile does not exist!",
-                                Toast.LENGTH_SHORT).show();
+                      //do nothing!
                     }
                     }
 

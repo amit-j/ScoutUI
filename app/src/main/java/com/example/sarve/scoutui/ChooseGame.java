@@ -39,7 +39,7 @@ public class ChooseGame extends AppCompatActivity {
         btnGameTwo.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent homeScreen = new Intent(ChooseGame.this,HomeScreen.class);
+                Intent homeScreen = new Intent(ChooseGame.this,GameProfileCreation.class);
                 homeScreen.putExtra("gamename","pubg");
                 startActivity(homeScreen);
             }
