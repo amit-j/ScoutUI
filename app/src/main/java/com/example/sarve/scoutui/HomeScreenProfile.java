@@ -91,7 +91,7 @@ public class HomeScreenProfile extends Fragment {
 
 
         displayProfileData();
-
+        setButtonListners();
 
 
         return rootView;
@@ -100,6 +100,36 @@ public class HomeScreenProfile extends Fragment {
 
     }
 
+
+
+    private void setButtonListners(){
+
+        btnChangeGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(HomeScreenProfile.this.getActivity(), ChooseGame.class);
+                startActivity(i);
+            }
+        });
+
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(HomeScreenProfile.this.getActivity(), SignIn.class);
+                startActivity(i);
+
+            }
+        });
+
+        btnLookForMatches.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+    }
 
     /*private void test(){
 
