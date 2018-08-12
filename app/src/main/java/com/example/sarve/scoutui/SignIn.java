@@ -86,7 +86,7 @@ public class SignIn extends AppCompatActivity {
                                                 SharedPreferences prefs = getSharedPreferences(Globals.SCOUT_PREFERENCENAME, MODE_PRIVATE);
                                                 String restoredText = prefs.getString("username",null);
 
-                                                Intent i = new Intent(SignIn.this,InitialSetup.class);
+                                                Intent i = new Intent(SignIn.this,ChooseGame.class);
                                                 startActivity(i);
                                                 //Toast.makeText(SignIn.this,"pwd correct",Toast.LENGTH_SHORT).show();
                                             }
