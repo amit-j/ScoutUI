@@ -70,6 +70,8 @@ public class HomeScreenProfile extends Fragment {
 
         btnLookForMatches =  rootView.findViewById(R.id.btnLookForMatches);
          txtPlayerRatingValue = rootView.findViewById(R.id.overAllRatingValue);
+         btnChangeGame=rootView.findViewById(R.id.btnChangeGame);
+         btnLogOut=rootView.findViewById(R.id.btnLogOut);
         txtRatingOneValue= rootView.findViewById(R.id.teamPlayerValue);
         txtRatingTwoValue = rootView.findViewById(R.id.camperValue);
         txtRatingThreeValue = rootView.findViewById(R.id.strikerValue);
