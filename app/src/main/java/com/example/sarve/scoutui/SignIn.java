@@ -44,7 +44,7 @@ public class SignIn extends AppCompatActivity {
 
         editPassword = (MaterialEditText)findViewById(R.id.editPassword);
         editPhone = (MaterialEditText)findViewById(R.id.editPhone);
-        btnSignIn = (Button)findViewById(R.id.btnSignIn);
+        btnSignIn = findViewById(R.id.btnSignIn);
 
         mFirestore = FirebaseFirestore.getInstance();
         btnSignIn.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +101,7 @@ public class SignIn extends AppCompatActivity {
 
                                 else{
                                 Toast.makeText(SignIn.this,"check your phone number",Toast.LENGTH_SHORT).show();
-                               // Log.d(TAG ," doc  not fouond ");
+
                             }
                         }
                     }

@@ -7,13 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.sarve.scoutui.Model.Globals;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -48,7 +43,6 @@ public class GameProfileCreation extends AppCompatActivity {
         initFirestore();
 
         //This call should be done at game selection screen with a wait bar!
-     // doesProfileAlreadyExist(gameName);
 
         setContentView(R.layout.activity_game_profile_creation);
 
@@ -180,6 +174,7 @@ public class GameProfileCreation extends AppCompatActivity {
             newProfile.put(Globals.GAMERID_KEY, gamerID);
             newProfile.put(Globals.GAMER_LANGUAGE_PREF, Language);
             newProfile.put(Globals.GAMER_AGE_PREF, ageGroup);
+            newProfile.put(Globals.GAMER_TIME_PREF, availableTime);
 
 
 
