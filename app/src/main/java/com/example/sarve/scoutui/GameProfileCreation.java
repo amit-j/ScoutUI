@@ -52,7 +52,19 @@ public class GameProfileCreation extends AppCompatActivity {
 
         setContentView(R.layout.activity_game_profile_creation);
 
+         mDialog = new ProgressDialog(GameProfileCreation.this);
+        mDialog.setMessage("Please wait while we set things up");
+        mDialog.setProgress(0);
+
+        mDialog.show();
+        gameName = getIntent().getStringExtra("gamename");
         userName =getUserName();
+
+        doesProfileAlreadyExist(gameName);
+
+
+
+
 
         //fill spinners from firestore
 
@@ -89,6 +101,8 @@ public class GameProfileCreation extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Please enter a gamerID to be saved to your profile.",    Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
 
@@ -96,7 +110,7 @@ public class GameProfileCreation extends AppCompatActivity {
 
     private void doesProfileAlreadyExist(String gameName){
         CollectionReference gameProfile = mFirestore.collection("users");
-        Task snapshot = gameProfile.document(userName + "/game_profiles/"+gameName).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        Task snapshot = gameProfile.document(userName + "/gamer_profiles/"+gameName).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -111,6 +125,8 @@ public class GameProfileCreation extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     }
                     }
+
+                mDialog.dismiss();
             }
 
         });
@@ -215,6 +231,7 @@ public class GameProfileCreation extends AppCompatActivity {
 
     private void goToHomeScreen(){
         Intent homeScreen = new Intent(GameProfileCreation.this,HomeScreen.class);
+        homeScreen.putExtra("gamename",gameName);
         startActivity(homeScreen);
     }
 

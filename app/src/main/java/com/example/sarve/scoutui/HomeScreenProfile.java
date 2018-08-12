@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,25 +40,42 @@ public class HomeScreenProfile extends Fragment {
     Button btnLookForMatches, btnChangeGame, btnLogOut;
 
     private String username;
-    private String game = "pubg";
+    private String game ;
     private FirebaseFirestore mFirestore;
     private TextView txtPlayerRatingValue,
                      txtRatingOneValue,
                      txtRatingTwoValue,
-                     txtRatingThreeValue;
+                     txtRatingThreeValue,
+                     txtGamename;
+
+    private ImageView gamePicture;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home_screen_profile, container, false);
 
-        btnLookForMatches = (Button) rootView.findViewById(R.id.btnLookForMatches);
+        btnLookForMatches =  rootView.findViewById(R.id.btnLookForMatches);
          txtPlayerRatingValue = rootView.findViewById(R.id.overAllRatingValue);
         txtRatingOneValue= rootView.findViewById(R.id.teamPlayerValue);
         txtRatingTwoValue = rootView.findViewById(R.id.camperValue);
         txtRatingThreeValue = rootView.findViewById(R.id.strikerValue);
+        txtGamename = rootView.findViewById(R.id.txtGamename);
+        gamePicture = rootView.findViewById(R.id.imgGameImage);
+
 
         username = getUserName();
         mFirestore = FirebaseFirestore.getInstance();
+        game= HomeScreenProfile.this.getActivity().getIntent().getStringExtra("gamename");
+        txtGamename.setText(game.toUpperCase());
+
+        if(game.equals("pubg")){
+            gamePicture.setImageResource(R.mipmap.pubg);
+        }
+        else{
+            gamePicture.setImageResource(R.mipmap.fortnite);
+        }
+
 
         displayProfileData();
 
