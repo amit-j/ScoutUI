@@ -37,7 +37,7 @@ public class GameProfileCreation extends AppCompatActivity {
 
 
     //Temp strings for testing
-    private String gameName = "fortnite";
+    private String gameName = "pubg";
     private String userName;
     FirebaseFirestore mFirestore;
 
@@ -166,6 +166,17 @@ public class GameProfileCreation extends AppCompatActivity {
             newProfile.put(Globals.GAMER_LANGUAGE_PREF, Language);
             newProfile.put(Globals.GAMER_AGE_PREF, ageGroup);
             newProfile.put(Globals.GAMER_TIME_PREF, availableTime);
+            newProfile.put("rank_var_1_avg", "0");
+            newProfile.put("rank_var_1_positive", "0");
+            newProfile.put("rank_var_1_total", "0");
+            newProfile.put("rank_var_2_avg", "0");
+            newProfile.put("rank_var_2_positive", "0");
+            newProfile.put("rank_var_2_total", "0");
+            newProfile.put("rank_var_3_avg", "0");
+            newProfile.put("rank_var_3_positive", "0");
+            newProfile.put("rank_var_3_total", "0");
+            newProfile.put("player_rating", "0");
+
 
             gameProfile.document(userName + "/gamer_profiles/"+gameName).set(newProfile)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {

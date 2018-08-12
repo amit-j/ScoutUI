@@ -138,4 +138,10 @@ public class HomeScreen extends AppCompatActivity {
             return null;
         }*/
     }
+
+    @Override
+    public void onBackPressed() {
+        //we dont want users to go press back from here.
+        //dont do anything for now.
+    }
 }
