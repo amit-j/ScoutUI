@@ -124,7 +124,7 @@ public class HomeScreen extends AppCompatActivity {
             return 3;
         }
 
-        /*@Override
+        /*@Overridegit p
         public CharSequence getPageTitle(int position)
         {
             switch (position) {
