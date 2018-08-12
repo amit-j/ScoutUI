@@ -1,6 +1,7 @@
 package com.example.sarve.scoutui;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 public class SignUp extends AppCompatActivity {
 
+
     MaterialEditText editPhone, editName, editPassword;
     Button btnSignUp;
     private FirebaseFirestore mFirestore;
@@ -45,6 +47,13 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+                final ProgressDialog mDialog = new ProgressDialog(SignUp.this);
+                mDialog.setMessage("Logging in..");
+                mDialog.setProgress(0);
+
+                mDialog.show();
+
                 String name = editName.getText().toString();
                 String phone = editPhone.getText().toString();
                 String password = editPassword.getText().toString();
@@ -61,11 +70,12 @@ public class SignUp extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                               // Intent i = new Intent(SignUp.this, SignIn.class);
 
-                                Toast.makeText(SignUp.this, "SignUp Successful", Toast.LENGTH_SHORT).show();
-                               // startActivity(i);
-                         //   }
+
+                                Intent i = new Intent(SignUp.this, InitialSetup.class);
+                                startActivity(i);
+                         mDialog.dismiss();
+
                        // })
                        // .addOnFailureListener(new OnFailureListener() {
                            // @Override
