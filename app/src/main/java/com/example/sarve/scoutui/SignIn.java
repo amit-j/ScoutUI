@@ -36,6 +36,7 @@ public class SignIn extends AppCompatActivity {
     EditText editPhone, editPassword;
     Button btnSignIn;
     private FirebaseFirestore mFirestore;
+    ProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,7 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                ProgressDialog mDialog = new ProgressDialog(SignIn.this);
+                 mDialog = new ProgressDialog(SignIn.this);
                 mDialog.setMessage("Logging in..");
                 mDialog.setProgress(0);
 
@@ -92,6 +93,7 @@ public class SignIn extends AppCompatActivity {
                                             else
                                             {
                                                 Toast.makeText(SignIn.this,"pwd incorrect",Toast.LENGTH_SHORT).show();
+                                                mDialog.dismiss();
                                             }
                                         }
                                     }
@@ -101,7 +103,7 @@ public class SignIn extends AppCompatActivity {
 
                                 else{
                                 Toast.makeText(SignIn.this,"check your phone number",Toast.LENGTH_SHORT).show();
-
+                                mDialog.dismiss();
                             }
                         }
                     }
