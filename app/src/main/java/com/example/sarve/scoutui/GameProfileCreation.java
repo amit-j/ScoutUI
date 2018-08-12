@@ -2,12 +2,14 @@ package com.example.sarve.scoutui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,10 +38,10 @@ public class GameProfileCreation extends AppCompatActivity {
 
     //Temp strings for testing
     private String gameName = "fortnite";
-    private String userName = "5622847102";
+    private String userName;
     FirebaseFirestore mFirestore;
 
-
+     ProgressDialog mDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,32 +52,41 @@ public class GameProfileCreation extends AppCompatActivity {
 
         setContentView(R.layout.activity_game_profile_creation);
 
+        userName =getUserName();
+
+        //fill spinners from firestore
+
+
+
         btnCreateGameProfile = findViewById(R.id.btnCreateGameProfile);
+
         spinnerAgeGroup = findViewById(R.id.preferredAgeGroupSpinner);
-        spinnerAgeGroup.setItems("0-10", "11-16", "17-21", "21+");
-
-
+        fillSpinner(spinnerAgeGroup,"age");
 
         spinnerPreferedTime = findViewById(R.id.preferredPlaytimeSpinner);
-        spinnerPreferedTime.setItems("Morning", "Afternoons", "Evening", "Late Nights");
+        fillSpinner(spinnerPreferedTime,"time");
 
 
 
-       spinnerPreferedLanguage = findViewById(R.id.preferredLangaugepSpinner);
-       spinnerPreferedLanguage.setItems("English", "Spanish", "French", "Hindi");
+        spinnerPreferedLanguage = findViewById(R.id.preferredLangaugepSpinner);
+        fillSpinner(spinnerPreferedLanguage,"languages");
 
 
-
-
-
-        btnCreateGameProfile.setOnClickListener(new View.OnClickListener(){
+      btnCreateGameProfile.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                final ProgressDialog mDialog = new ProgressDialog(GameProfileCreation.this);
-                mDialog.setMessage("Please Wait. We Appreciate Your Patience :)");
-                mDialog.show();
-                saveProfile();
-               // mDialog.dismiss();
+
+                if(validateScreen()) {
+                    ProgressDialog progressBar = new ProgressDialog(GameProfileCreation.this);
+                    progressBar.setMessage("Saving your profile.");
+                    progressBar.show();
+                    progressBar.setProgress(0);
+                    saveProfile();
+                    progressBar.setProgress(100);
+
+                }
+                else
+                    Toast.makeText(getBaseContext(), "Please enter a gamerID to be saved to your profile.",    Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -115,6 +126,18 @@ public class GameProfileCreation extends AppCompatActivity {
         mFirestore = FirebaseFirestore.getInstance();
     }
 
+
+
+    private boolean validateScreen(){
+
+        MaterialEditText edtgamerID = findViewById(R.id.gamerID);
+        if(edtgamerID.getText().toString().trim().isEmpty())
+            return false;
+
+        return true;
+    }
+
+
     private void saveProfile(){
         boolean isSuccessful;
         try {
@@ -144,7 +167,7 @@ public class GameProfileCreation extends AppCompatActivity {
             newProfile.put(Globals.GAMER_AGE_PREF, ageGroup);
             newProfile.put(Globals.GAMER_TIME_PREF, availableTime);
 
-            gameProfile.document(userName + "/game_profiles/"+gameName).set(newProfile)
+            gameProfile.document(userName + "/gamer_profiles/"+gameName).set(newProfile)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -160,6 +183,8 @@ public class GameProfileCreation extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             Toast.makeText(GameProfileCreation.this, "ERROR saving profile." +e.toString(),
                                     Toast.LENGTH_SHORT).show();
+                            mDialog.dismiss();
+
 
                         }
                     });
@@ -180,5 +205,42 @@ public class GameProfileCreation extends AppCompatActivity {
     private void goToHomeScreen(){
         Intent homeScreen = new Intent(GameProfileCreation.this,HomeScreen.class);
         startActivity(homeScreen);
+    }
+
+
+
+    private void fillSpinner(final MaterialSpinner mSpinner, String preference){
+
+        CollectionReference collection = mFirestore.collection("preferences");
+        collection.document(preference).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+
+
+                    if (document.exists()) {
+
+                        mSpinner.setItems( document.getData().values().toArray());
+
+
+                    }
+                    else{
+                        Toast.makeText(GameProfileCreation.this, "Error reading preference data from database.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+        });
+
+    }
+
+
+
+    private String getUserName(){
+        SharedPreferences prefs = getSharedPreferences(Globals.SCOUT_PREFERENCENAME, MODE_PRIVATE);
+        String restoredText = prefs.getString("username",null);
+        return restoredText ;
     }
 }

@@ -1,7 +1,9 @@
 package com.example.sarve.scoutui;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.sarve.scoutui.Model.Globals;
 import com.example.sarve.scoutui.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -58,15 +61,25 @@ public class SignIn extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
                             if(document.exists())
                             {
-                                DocumentReference pref = mFirestore.collection("users").document(editPassword.getText().toString());
+                                DocumentReference pref = mFirestore.collection("users").document(editPhone.getText().toString());
                                 pref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                         if(task.isSuccessful())
                                         {
                                             DocumentSnapshot pwd = task.getResult();
-                                            if(pwd.exists())
+                                            if(pwd.exists() && pwd.get("password").equals(editPassword.getText().toString()))  //fixed the sign in bug and verified passwords correct data : amit J
                                             {
+
+                                                //adding usernames to the shared preference so we can access it later : amit J
+                                                SharedPreferences.Editor editor = getSharedPreferences(Globals.SCOUT_PREFERENCENAME, MODE_PRIVATE).edit();
+                                                editor.putString("username", editPhone.getText().toString());
+                                                editor.apply();
+
+
+                                                SharedPreferences prefs = getSharedPreferences(Globals.SCOUT_PREFERENCENAME, MODE_PRIVATE);
+                                                String restoredText = prefs.getString("username",null);
+
                                                 Intent i = new Intent(SignIn.this,InitialSetup.class);
                                                 startActivity(i);
                                                 //Toast.makeText(SignIn.this,"pwd correct",Toast.LENGTH_SHORT).show();
@@ -78,12 +91,7 @@ public class SignIn extends AppCompatActivity {
                                         }
                                     }
                                 });
-                                //Toast.makeText(SignIn.this,"doc exsists",Toast.LENGTH_SHORT).show();
 
-
-
-
-                             //  Log.d(TAG ," doc fouond " , document.getData());
                                 }
 
                                 else{
