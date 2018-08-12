@@ -24,4 +24,10 @@ public class InitialSetup extends AppCompatActivity {
             }
         });
     }
+
+
+    public void onBackPressed() {
+       //dont go anywhere@!
+
+    }
 }

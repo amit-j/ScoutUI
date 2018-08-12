@@ -51,6 +51,11 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                ProgressDialog mDialog = new ProgressDialog(SignIn.this);
+                mDialog.setMessage("Logging in..");
+                mDialog.setProgress(0);
+
+                mDialog.show();
 
                 final DocumentReference docRef = mFirestore.collection("users").document(editPhone.getText().toString());
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

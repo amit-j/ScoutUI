@@ -45,4 +45,9 @@ public class ChooseGame extends AppCompatActivity {
             }
         });
     }
+
+    public void onBackPressed() {
+      //dont go anywhere!
+    }
+
 }
