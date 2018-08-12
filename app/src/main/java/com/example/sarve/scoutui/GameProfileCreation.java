@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.sarve.scoutui.Model.Globals;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,9 +34,12 @@ public class GameProfileCreation extends AppCompatActivity {
 
 
     //Temp strings for testing
-    private String gameName = "pubg";
+    private String gameName ;
     private String userName;
     FirebaseFirestore mFirestore;
+
+    TextView txtGameName;
+    ImageView imgGameImage;
 
      ProgressDialog mDialog;
     @Override
@@ -51,8 +56,26 @@ public class GameProfileCreation extends AppCompatActivity {
         mDialog.setProgress(0);
 
         mDialog.show();
+
+
+        txtGameName = findViewById(R.id.txtGamename);
+
+        imgGameImage = findViewById(R.id.imgGameImage);
+
         gameName = getIntent().getStringExtra("gamename");
+        if(gameName.equals("pubg")){
+            imgGameImage.setImageResource(R.mipmap.pubg);
+            txtGameName.setText("PUBG");
+        }
+        else{
+            imgGameImage.setImageResource(R.mipmap.fortnite);
+            txtGameName.setText("FORTNITE");
+        }
+
+
         userName =getUserName();
+
+
 
         doesProfileAlreadyExist(gameName);
 
