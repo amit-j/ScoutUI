@@ -75,14 +75,6 @@
           }
         },
         {
-          "client_id": "533256033948-3rj77n518anp2a1d9rpe1i0j6hhlni8u.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.veera.fragment",
-            "certificate_hash": "b34135b01106b883f1959a8fd2600a620caafdd3"
-          }
-        },
-        {
           "client_id": "533256033948-bq8q7avagdqb5f8s09a38kfqs0uuav35.apps.googleusercontent.com",
           "client_type": 3
         }
