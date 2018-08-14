@@ -29,7 +29,8 @@
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen"
             android:theme="@style/AppTheme" />
-        <activity android:name=".GameProfileCreation"></activity>
+        <activity android:name=".GameProfileCreation" />
+        <activity android:name=".Model.HomeScreenRatePlayer"></activity>
     </application>
 
 </manifest>

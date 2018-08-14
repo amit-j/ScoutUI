@@ -57,8 +57,6 @@
     <string name="ratePlayerName2">Jason</string>
 
 
-
-
     <string-array name="age_groups">
         <item>0-10</item>
         <item>11-16</item>

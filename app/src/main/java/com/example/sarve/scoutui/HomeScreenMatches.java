@@ -174,7 +174,7 @@ public class HomeScreenMatches extends Fragment {
 
 
                                         mDialog.setCancelable(true);
-                                        matches.remove(currentMatch);
+                                      //  matches.remove(currentMatch);
 
 
                                     }
@@ -228,6 +228,7 @@ public class HomeScreenMatches extends Fragment {
                     matchCamper.setText(currentMatch.get("rank_var_2_avg").toString());
                     matchStriker.setText(currentMatch.get("rank_var_3_avg").toString());
                     displayProfileData(currentMatch.getId().toString());
+
 
 
                 }

@@ -37,11 +37,10 @@ public class ChooseGame extends AppCompatActivity {
 
 
 
-                Intent homeScreen = new Intent(ChooseGame.this,GameProfileCreation.class);
-                homeScreen.putExtra("gamename","fortnite");
+
                 gameName="fortnite";
                 doesProfileAlreadyExist(gameName);
-                startActivity(homeScreen);
+
             }
         });
 
@@ -49,12 +48,11 @@ public class ChooseGame extends AppCompatActivity {
         btnGameTwo.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-               
-                Intent homeScreen = new Intent(ChooseGame.this,GameProfileCreation.class);
-                homeScreen.putExtra("gamename","pubg");
+
+
                 gameName="pubg";
                 doesProfileAlreadyExist(gameName);
-                startActivity(homeScreen);
+
             }
         });
     }
@@ -64,7 +62,7 @@ public class ChooseGame extends AppCompatActivity {
     }
 
 
-    private void doesProfileAlreadyExist(String gameName){
+    private void doesProfileAlreadyExist(final String gameName){
         CollectionReference gameProfile = mFirestore.collection("users");
         Task snapshot = gameProfile.document( getUserName()+ "/gamer_profiles/"+gameName).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -77,7 +75,9 @@ public class ChooseGame extends AppCompatActivity {
                         goToHomeScreen();
                     }
                     else{
-                        //do nothing!
+                        Intent homeScreen = new Intent(ChooseGame.this,GameProfileCreation.class);
+                        homeScreen.putExtra("gamename",gameName);
+                        startActivity(homeScreen);
                     }
                 }
 

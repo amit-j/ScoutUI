@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sarve.scoutui.Model.Globals;
+import com.example.sarve.scoutui.Model.HomeScreenRatePlayer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -118,7 +119,7 @@ public class HomeScreenProfile extends Fragment {
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(HomeScreenProfile.this.getActivity(), SignIn.class);
+                Intent i = new Intent(HomeScreenProfile.this.getActivity(), HomeScreenRatePlayer.class);
                 startActivity(i);
 
             }
@@ -199,12 +200,6 @@ public class HomeScreenProfile extends Fragment {
         });
     }
 
-
-
-/*    public HomeScreenProfile(FirebaseFirestore fire){
-        mFirestore  = fire;
-    }
-*/
 
     private String getUserName(){
         SharedPreferences prefs = this.getActivity().getSharedPreferences(Globals.SCOUT_PREFERENCENAME, MODE_PRIVATE);

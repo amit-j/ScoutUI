@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context="com.example.sarve.scoutui.Model.HomeScreenRatePlayer">
+
+    <RelativeLayout
+        android:id="@+id/gameProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/imgGameImage_rating"
+            android:layout_width="112dp"
+            android:layout_height="110dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="26dp"
+            android:src="@drawable/game_logo1" />
+
+        <TextView
+            android:id="@+id/gamename_rating"
+            android:layout_width="178dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="28dp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="25dp"
+            android:fontFamily="@font/iceland"
+            android:text="Game One"
+            android:textAppearance="@android:style/TextAppearance.Material.Button"
+            android:textColor="@android:color/white"
+            android:textSize="40dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/gameProfile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/description_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="251dp"
+            android:layout_marginVertical="8dp"
+            android:fontFamily="@font/iceland"
+            android:text="@string/profileInfo"
+            android:textAlignment="center"
+            android:textStyle="italic"
+            android:textColor="@android:color/white"
+            android:textSize="15dp" />
+
+        <LinearLayout
+            android:id="@+id/overAllRatingLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/description_rating">
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/additionalParameters_rating"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/overAllRatingLayout"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/iceland"
+            android:text="@string/additionalParameters"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="30dp" />
+
+        <LinearLayout
+            android:id="@+id/teamPlayerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/additionalParameters_rating">
+
+            <TextView
+                android:id="@+id/var_1_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/iceland"
+                android:text="@string/teamPlayer"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="25dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/camperLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/teamPlayerLayout">
+            <TextView
+                android:id="@+id/var_2_name"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/iceland"
+                android:text="@string/camper"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="25dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/strikerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/camperLayout">
+            <TextView
+                android:id="@+id/var_3_name"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/iceland"
+                android:text="@string/striker"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="25dp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSubmitRating_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/strikerLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/iceland"
+            android:text="submit rating"
+            android:textAppearance="@android:style/TextAppearance.Material.Button"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnSubmitRating_rating"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <Switch
+        android:id="@+id/var_1_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="70dp"
+        android:layout_marginTop="257dp"
+        android:text="Switch" />
+
+    <Switch
+        android:id="@+id/var_2_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/var_1_rating"
+        android:layout_marginTop="297dp"
+        android:text="Switch" />
+
+    <Switch
+        android:id="@+id/var_3_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/var_1_rating"
+        android:layout_marginBottom="282dp"
+        android:text="Switch" />
+</RelativeLayout>
