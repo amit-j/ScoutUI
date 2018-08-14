@@ -90,7 +90,8 @@ public class HomeScreenMatches extends Fragment {
         matchCamper = (EditText) rootView.findViewById(R.id.matchCamperValue);
         matchStriker = (EditText) rootView.findViewById(R.id.matchStrikerValue);
         matchLanguage = (EditText) rootView.findViewById(R.id.matchLanguageValue);
-        getdata();
+        getPlayerData();
+
 
 
         btnShowGamerID.setOnClickListener(new View.OnClickListener() {
@@ -199,10 +200,11 @@ public class HomeScreenMatches extends Fragment {
         mDialog.setMessage("Please wait while we set things up");
         mDialog.setProgress(0);
 
+
         mDialog.show();
 
-        username = getUserName();
-        game = HomeScreenMatches.this.getActivity().getIntent().getStringExtra("gamename");
+
+
         CollectionReference collection = mFirestore.collection("user_rankings/" + game + "/rankings");
         Query q = collection.whereGreaterThan("player_rating", mPlayerRating - 10).whereLessThan("player_rating", mPlayerRating + 10);
         q.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -218,11 +220,12 @@ public class HomeScreenMatches extends Fragment {
                     matchCamper.setText(currentMatch.get("rank_var_2_avg").toString());
                     matchStriker.setText(currentMatch.get("rank_var_3_avg").toString());
                     displayProfileData(currentMatch.getId().toString());
-                    mDialog.dismiss();
+
 
                 }
 
                 totalMatches.setText("" + matches.size());
+                mDialog.dismiss();
             }
         });
     }
@@ -274,11 +277,16 @@ public class HomeScreenMatches extends Fragment {
     }
 
     private void getPlayerData() {
+        username = getUserName();
+        game = HomeScreenMatches.this.getActivity().getIntent().getStringExtra("gamename");
 
         CollectionReference collection = mFirestore.collection("user_rankings/" + game + "/rankings");
         collection.document(username).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                mDialog = new ProgressDialog(HomeScreenMatches.this.getActivity());
+                mDialog.setMessage("getting user data");
+                mDialog.show();
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
@@ -287,7 +295,7 @@ public class HomeScreenMatches extends Fragment {
                         Toast.makeText(HomeScreenMatches.this.getActivity(), "Error reading player ratings.",
                                 Toast.LENGTH_SHORT).show();
                     }
-                    mDialog.dismiss();
+                    getdata();
                 }
 
 
@@ -353,7 +361,7 @@ public class HomeScreenMatches extends Fragment {
 
 
     private String checkNull(Object o) {
-        if (o.equals(null))
+        if (o == null)
             return "";
         else
            return o.toString();
