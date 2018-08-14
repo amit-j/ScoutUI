@@ -104,56 +104,10 @@ public class HomeScreenRatePlayer extends AppCompatActivity {
 
     }
 
-    private void saveMatchData(){
-
-
-        // Get a reference to the restaurants collection
-        CollectionReference gameProfile = mFirestore.collection("users/"+username);
-
-        Map<String, Object> newProfile = new HashMap<>();
-        newProfile.put(Globals.GAMERID_KEY, gamerID);
-        newProfile.put(Globals.GAMER_LANGUAGE_PREF, Language);
-        newProfile.put(Globals.GAMER_AGE_PREF, ageGroup);
-        newProfile.put(Globals.GAMER_TIME_PREF, availableTime);
 
 
 
-        gameProfile.document(userName + "/gamer_profiles/"+gameName).set(newProfile)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(GameProfileCreation.this, "Profile saved.",
-                                Toast.LENGTH_SHORT).show();
-                        createRankings();
-
-                        goToHomeScreen();
-
-
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(GameProfileCreation.this, "ERROR saving profile." +e.toString(),
-                                Toast.LENGTH_SHORT).show();
-                        mDialog.dismiss();
-
-
-                    }
-                });
-
-
-    }
-
-
-
-
-
-
-
-}
-
-    private St ring getUserName(){
+    private String getUserName(){
         SharedPreferences prefs = getSharedPreferences(Globals.SCOUT_PREFERENCENAME, MODE_PRIVATE);
         String restoredText = prefs.getString("username",null);
         return restoredText ;
