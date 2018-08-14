@@ -353,11 +353,11 @@ public class HomeScreenMatches extends Fragment {
 
 
     private String checkNull(Object o) {
-        if (o == null)
+        if (o.equals(null))
             return "";
         else
-            o.toString();
-        return "";
+           return o.toString();
+
 
     }
 }
