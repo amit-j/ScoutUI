@@ -45,7 +45,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class HomeScreenProfile extends Fragment {
     Button btnLookForMatches, btnChangeGame, btnLogOut;
-
     private String username;
     private String game ;
     private FirebaseFirestore mFirestore;
@@ -70,6 +69,8 @@ public class HomeScreenProfile extends Fragment {
 
         btnLookForMatches =  rootView.findViewById(R.id.btnLookForMatches);
          txtPlayerRatingValue = rootView.findViewById(R.id.overAllRatingValue);
+         btnChangeGame=rootView.findViewById(R.id.btnChangeGame);
+         btnLogOut=rootView.findViewById(R.id.btnLogOut);
         txtRatingOneValue= rootView.findViewById(R.id.teamPlayerValue);
         txtRatingTwoValue = rootView.findViewById(R.id.camperValue);
         txtRatingThreeValue = rootView.findViewById(R.id.strikerValue);
@@ -78,7 +79,8 @@ public class HomeScreenProfile extends Fragment {
 
 
         username = getUserName();
-        mFirestore = FirebaseFirestore.getInstance();
+       //
+       mFirestore = FirebaseFirestore.getInstance();
         game= HomeScreenProfile.this.getActivity().getIntent().getStringExtra("gamename");
         txtGamename.setText(game.toUpperCase());
 
@@ -91,7 +93,7 @@ public class HomeScreenProfile extends Fragment {
 
 
         displayProfileData();
-
+        setButtonListners();
 
 
         return rootView;
@@ -100,6 +102,38 @@ public class HomeScreenProfile extends Fragment {
 
     }
 
+
+
+    private void setButtonListners(){
+
+        btnChangeGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(HomeScreenProfile.this.getActivity(), ChooseGame.class);
+                startActivity(i);
+            }
+        });
+
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(HomeScreenProfile.this.getActivity(), SignIn.class);
+                startActivity(i);
+
+            }
+        });
+
+        btnLookForMatches.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+
+
+    }
 
     /*private void test(){
 
@@ -166,7 +200,10 @@ public class HomeScreenProfile extends Fragment {
 
 
 
-
+/*    public HomeScreenProfile(FirebaseFirestore fire){
+        mFirestore  = fire;
+    }
+*/
 
     private String getUserName(){
         SharedPreferences prefs = this.getActivity().getSharedPreferences(Globals.SCOUT_PREFERENCENAME, MODE_PRIVATE);

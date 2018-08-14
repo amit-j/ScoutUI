@@ -2,6 +2,7 @@ package com.example.sarve.scoutui;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.provider.DocumentsProvider;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,98 +30,237 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sarve.scoutui.Model.Globals;
+import com.example.sarve.scoutui.Model.User;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.rengwuxian.materialedittext.MaterialEditText;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class HomeScreenMatches extends Fragment {
 
+    private static final String KEY_OVERALLRATING = "player_rating";
+    private static final String KEY_TEAMPLAYER = "rank_var_1_avg";
+    private static final String KEY_CAMPER = "rank_var_2_avg";
+    private static final String KEY_STRIKER = "rank_var_3_avg";
+    private static final String KEY_USERNAME = "player_rating";
     Button btnShowGamerID, btnPreviousMatch, btnNextMatch;
-    private List<DocumentSnapshot> matches;
+    private ArrayList<DocumentSnapshot> matches;
     private String username;
     private String game;
     ProgressDialog mDialog;
-    private FirebaseFirestore mFirestore;
+    public FirebaseFirestore mFirestore;
     private int mPlayerRating;
-    public Iterator<DocumentSnapshot> matchesIterator;
+    public ListIterator<DocumentSnapshot> matchesIterator;
+    public DocumentSnapshot previousMatch, currentMatch;
+    EditText totalMatches, matchOverAllRating, matchUserName, matchLanguage, matchAge, matchTime, matchTeamPlayer, matchCamper, matchStriker;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mFirestore = FirebaseFirestore.getInstance();
         View rootView = inflater.inflate(R.layout.fragment_home_screen_matches, container, false);
-        EditText overRating = (EditText) rootView.findViewById(R.id.matchStrikerValue);
-        overRating.setText("abdc");
         btnShowGamerID = (Button) rootView.findViewById(R.id.btnShowGamerID);
-        test();
-        matchesIterator = matches.iterator();
+        btnNextMatch = (Button) rootView.findViewById(R.id.btnNextMatch);
+        btnPreviousMatch = (Button) rootView.findViewById(R.id.btnPreviousMatch);
+        totalMatches = (EditText) rootView.findViewById(R.id.totalMatchesValue);
+        matchOverAllRating = (EditText) rootView.findViewById(R.id.matchOverAllRatingValue);
+        matchUserName = (EditText) rootView.findViewById(R.id.matchUserNameValue);
+        matchAge = (EditText) rootView.findViewById(R.id.matchAgeValue);
+        matchTime = (EditText) rootView.findViewById(R.id.matchTimeValue);
+        matchTeamPlayer = (EditText) rootView.findViewById(R.id.matchTeamPlayerValue);
+        matchCamper = (EditText) rootView.findViewById(R.id.matchCamperValue);
+        matchStriker = (EditText) rootView.findViewById(R.id.matchStrikerValue);
+        matchLanguage = (EditText) rootView.findViewById(R.id.matchLanguageValue);
+        getdata();
+
 
         btnShowGamerID.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {/*
-                View popupView = LayoutInflater.from(getActivity()).inflate(R.layout.popup_layout, null);
-                final PopupWindow popupWindow = new PopupWindow(popupView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-
-// define your view here that found in popup_layout
-// for example let consider you have a button
-
-                Button btn = (Button) popupView.findViewById(R.id.button);
-
-// finally show up your popwindow
-                popupWindow.showAsDropDown(popupView, 0, 0);
-*/
-            }
-        });
-        btnNextMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (matchesIterator.hasNext()) {
-                    matchesIterator.next();
+                mDialog.setMessage("Adding player to your matches..");
 
+                mDialog.show();
+                saveMatches();
 
-                }
 
             }
         });
-        return rootView;
 
+
+        btnNextMatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDialog = new ProgressDialog(HomeScreenMatches.this.getActivity());
+                mDialog.setMessage("Getting a match!");
+                mDialog.setProgress(0);
+                mDialog.show();
+                getNextMatch();
+
+            }
+        });
+
+
+        btnPreviousMatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDialog = new ProgressDialog(HomeScreenMatches.this.getActivity());
+                mDialog.setMessage("Getting a match!");
+                mDialog.setProgress(0);
+                mDialog.show();
+                getPreviousMatch();
+
+            }
+        });
+
+
+        return rootView;
     }
 
 
-    private void test() {
+    private void saveMatches() {
+        try {
+            final Map<String, Object> newProfile = new HashMap<>();
+            newProfile.put("has_been_rated", false);
+            newProfile.put("rank_var_1", false);
+            newProfile.put("rank_var_2", false);
+            newProfile.put("rank_var_3", false);
+
+            CollectionReference collection = mFirestore.collection("users/" + currentMatch.getId() + "/gamer_profiles");
+            collection.document(game).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+
+
+                        if (document.exists()) {
+
+                            newProfile.put(Globals.GAMERID_KEY, document.get("gamer_ID"));
+                            CollectionReference newmatch = mFirestore.collection("users/" + username + "/gamer_profiles/" + game + "/matches");
+                            newmatch.document(currentMatch.getId()).set(newProfile).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+                                    mDialog.setMessage("Player " + currentMatch.getId() + " added to your matches!");
+
+
+                                    mDialog.setCancelable(true);
+
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(HomeScreenMatches.this.getActivity(), "Something went wrong, Please try again later." + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+
+
+                        }
+                    }
+
+                }
+
+            });
+
+
+        } catch (Exception ex) {
+            Toast.makeText(HomeScreenMatches.this.getActivity(), "Something went wrong, Please try again later.", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    private void getdata() {
+
+        mDialog = new ProgressDialog(HomeScreenMatches.this.getActivity());
+        mDialog.setMessage("Please wait while we set things up");
+        mDialog.setProgress(0);
+
+        mDialog.show();
+
         username = getUserName();
         game = HomeScreenMatches.this.getActivity().getIntent().getStringExtra("gamename");
-
-        CollectionReference collection = mFirestore.collection("user_rankings/pubg/rankings");
+        CollectionReference collection = mFirestore.collection("user_rankings/" + game + "/rankings");
         Query q = collection.whereGreaterThan("player_rating", mPlayerRating - 10).whereLessThan("player_rating", mPlayerRating + 10);
         q.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot snapshots) {
+                matches = new ArrayList<>(snapshots.getDocuments());
+                matchesIterator = matches.listIterator();
+                if (matchesIterator.hasNext()) {
 
-                matches = snapshots.getDocuments();
+                    currentMatch = matchesIterator.next();
+                    matchOverAllRating.setText(currentMatch.get("player_rating").toString());
+                    matchTeamPlayer.setText(currentMatch.get("rank_var_1_avg").toString());
+                    matchCamper.setText(currentMatch.get("rank_var_2_avg").toString());
+                    matchStriker.setText(currentMatch.get("rank_var_3_avg").toString());
+                    displayProfileData(currentMatch.getId().toString());
+                    mDialog.dismiss();
 
+                }
 
+                totalMatches.setText("" + matches.size());
             }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                                          @Override
-                                          public void onFailure(@NonNull Exception e) {
-                                              Toast.makeText(HomeScreenMatches.this.getActivity(), e.getMessage(),
-                                                      Toast.LENGTH_SHORT).show();
-                                          }
-                                      }
-                );
+        });
+    }
+
+
+    private void getNextMatch() {
+        if (matchesIterator.hasNext()) {
+
+            currentMatch = matchesIterator.next();
+            matchOverAllRating.setText(currentMatch.get("player_rating").toString());
+            matchTeamPlayer.setText(currentMatch.get("rank_var_1_avg").toString());
+            matchCamper.setText(currentMatch.get("rank_var_2_avg").toString());
+            matchStriker.setText(currentMatch.get("rank_var_3_avg").toString());
+            displayProfileData(currentMatch.getId().toString());
+            //   mDialog.dismiss();
+            btnPreviousMatch.setEnabled(true);
+
+        } else {
+            btnNextMatch.setEnabled(false);
+            mDialog.setMessage("No more matches to show!");
+        }
+    }
+
+    private void getPreviousMatch() {
+        if (matchesIterator.hasPrevious()) {
+
+            currentMatch = matchesIterator.previous();
+            matchOverAllRating.setText(currentMatch.get("player_rating").toString());
+            matchTeamPlayer.setText(currentMatch.get("rank_var_1_avg").toString());
+            matchCamper.setText(currentMatch.get("rank_var_2_avg").toString());
+            matchStriker.setText(currentMatch.get("rank_var_3_avg").toString());
+            displayProfileData(currentMatch.getId().toString());
+            //   mDialog.dismiss();
+            btnNextMatch.setEnabled(true);
+        } else {
+            btnPreviousMatch.setEnabled(false);
+            mDialog.setMessage("No matches to show!");
+        }
     }
 
     private String getUserName() {
@@ -128,8 +269,11 @@ public class HomeScreenMatches extends Fragment {
         return restoredText;
     }
 
+    private void setmatchdata() {
 
-    private void ggetPlayerData() {
+    }
+
+    private void getPlayerData() {
 
         CollectionReference collection = mFirestore.collection("user_rankings/" + game + "/rankings");
         collection.document(username).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -137,23 +281,84 @@ public class HomeScreenMatches extends Fragment {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-
-
                     if (document.exists()) {
-
                         mPlayerRating = Integer.parseInt(document.get("player_rating").toString());
-
-
                     } else {
-                        Toast.makeText(HomeScreenMatches.this.getActivity(), "Error reading player data.",
+                        Toast.makeText(HomeScreenMatches.this.getActivity(), "Error reading player ratings.",
                                 Toast.LENGTH_SHORT).show();
                     }
+                    mDialog.dismiss();
                 }
 
-                mDialog.setProgress(0);
+
             }
 
         });
     }
 
+
+    private void displayProfileData(final String uname) {
+
+        CollectionReference collection = mFirestore.collection("users/" + uname + "/gamer_profiles");
+        collection.document(game).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                task.addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(HomeScreenMatches.this.getActivity(), "Error reading player preferences." + e.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+
+
+                    if (document.exists()) {
+
+
+                        matchUserName.setText(uname);
+                        matchAge.setText(checkNull(document.get(Globals.GAMER_AGE_PREF)).toString());
+                        matchLanguage.setText(checkNull(document.get(Globals.GAMER_LANGUAGE_PREF)).toString());
+                        matchTime.setText(checkNull(document.get(Globals.GAMER_TIME_PREF)).toString());
+
+
+                    } else {
+                        Toast.makeText(HomeScreenMatches.this.getActivity(), "Error reading player preferences.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                mDialog.dismiss();
+
+            }
+
+        }).addOnFailureListener(new OnFailureListener() {
+
+
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(HomeScreenMatches.this.getActivity(), "Error reading player preferences." + e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }).addOnCanceledListener(new OnCanceledListener() {
+            @Override
+            public void onCanceled() {
+                Toast.makeText(HomeScreenMatches.this.getActivity(), "Error reading player preferences cancelled.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private String checkNull(Object o) {
+        if (o == null)
+            return "";
+        else
+            o.toString();
+        return "";
+
+    }
 }
+

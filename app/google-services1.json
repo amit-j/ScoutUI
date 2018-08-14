@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "533256033948",
+    "firebase_url": "https://scout-67b21.firebaseio.com",
+    "project_id": "scout-67b21",
+    "storage_bucket": "scout-67b21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533256033948:android:61c247fbf7e8d1a5",
+        "android_client_info": {
+          "package_name": "com.example.sarve.scoutui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533256033948-g7csmu2uvnl5uu3kvk2fps5f97p4o378.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sarve.scoutui",
+            "certificate_hash": "e5211a63dfe1b6c638e6e32c53a67e6d52df0233"
+          }
+        },
+        {
+          "client_id": "533256033948-pg6brgd4mu0g9fl09b2q5p8v8d1716fu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sarve.scoutui",
+            "certificate_hash": "e04f49b12b29d6e5ecee6875e032f1fc3b54b53f"
+          }
+        },
+        {
+          "client_id": "533256033948-bq8q7avagdqb5f8s09a38kfqs0uuav35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6fnxrfNpkJyU52YGD9fz9uK5NQGymVMc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533256033948-bq8q7avagdqb5f8s09a38kfqs0uuav35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533256033948:android:110553f394693bc5",
+        "android_client_info": {
+          "package_name": "com.example.veera.fragment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533256033948-ea6hbrm92q6iggl2gvjugbo4eavhcseo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.veera.fragment",
+            "certificate_hash": "deb0d0b0932f46fac7510f4eb9280c0d632a307c"
+          }
+        },
+        {
+          "client_id": "533256033948-bq8q7avagdqb5f8s09a38kfqs0uuav35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6fnxrfNpkJyU52YGD9fz9uK5NQGymVMc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533256033948-bq8q7avagdqb5f8s09a38kfqs0uuav35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

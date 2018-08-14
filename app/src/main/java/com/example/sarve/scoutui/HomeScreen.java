@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class HomeScreen extends AppCompatActivity {
 
     /**
@@ -30,6 +32,7 @@ public class HomeScreen extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    private FirebaseFirestore mFirestore;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -40,6 +43,8 @@ public class HomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+        mFirestore = FirebaseFirestore.getInstance();
+
 
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -108,7 +113,9 @@ public class HomeScreen extends AppCompatActivity {
                     HomeScreenProfile tabProfile = new HomeScreenProfile();
                     return tabProfile;
                 case 1:
-                    HomeScreenMatches tabMatches = new HomeScreenMatches();
+                    HomeScreenMatches tabMatches = new HomeScreenMatches(
+
+                    );
                     return tabMatches;
                 case 2:
                     HomeScreenRating tabRating = new HomeScreenRating();
@@ -124,7 +131,7 @@ public class HomeScreen extends AppCompatActivity {
             return 3;
         }
 
-        /*@Override
+        /*@Overridegit p
         public CharSequence getPageTitle(int position)
         {
             switch (position) {
