@@ -22,7 +22,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="26dp"
-            android:src="@drawable/game_logo1" />
+            android:src="@mipmap/fortnite" />
 
         <TextView
             android:id="@+id/gamename_rating"
@@ -34,7 +34,7 @@
             android:layout_marginHorizontal="25dp"
             android:layout_marginVertical="25dp"
             android:fontFamily="@font/iceland"
-            android:text="Game One"
+            android:text="FORTNITE"
             android:textAppearance="@android:style/TextAppearance.Material.Button"
             android:textColor="@android:color/white"
             android:textSize="40dp" />

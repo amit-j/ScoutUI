@@ -1,5 +1,6 @@
 package com.example.sarve.scoutui.Model;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -46,7 +47,15 @@ public class HomeScreenRatePlayer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen_rate_player);
 
-
+        Button btnSubmit = findViewById(R.id.btnSubmitRating_rating);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProgressDialog mDialog = new ProgressDialog(HomeScreenRatePlayer.this);
+                mDialog.setMessage("Rating Submitted!");
+                mDialog.show();
+            }
+        });
 
     }
     public void setButtonListners(){

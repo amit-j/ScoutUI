@@ -119,7 +119,7 @@ public class HomeScreenProfile extends Fragment {
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(HomeScreenProfile.this.getActivity(), HomeScreenRatePlayer.class);
+                Intent i = new Intent(HomeScreenProfile.this.getActivity(), MainActivity.class);
                 startActivity(i);
 
             }
