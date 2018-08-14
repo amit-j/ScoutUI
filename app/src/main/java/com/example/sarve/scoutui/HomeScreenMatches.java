@@ -72,7 +72,8 @@ public class HomeScreenMatches extends Fragment {
     public DocumentSnapshot previousMatch, currentMatch;
     EditText totalMatches, matchOverAllRating, matchUserName, matchLanguage, matchAge, matchTime, matchTeamPlayer, matchCamper, matchStriker;
 
-
+    private static final int MAX_MATCHES = 5;
+    private int matchesDone = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,8 +99,14 @@ public class HomeScreenMatches extends Fragment {
             @Override
             public void onClick(View view) {
 
-                mDialog.setMessage("Adding player to your matches..");
-
+                mDialog.setMessage("Loading..");
+                mDialog.show();
+                matchesDone++;
+                if(matchesDone > MAX_MATCHES){
+                    mDialog.setMessage("Max Limit reached for the day.");
+                    btnShowGamerID.setEnabled(false);
+                    return;
+                }
                 mDialog.show();
                 saveMatches();
 
@@ -152,34 +159,35 @@ public class HomeScreenMatches extends Fragment {
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
                     if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
+                            DocumentSnapshot document = task.getResult();
+
+                            final String gamerID=    document.get("gamer_ID").toString();
+                            if (document.exists()) {
+
+                                newProfile.put(Globals.GAMERID_KEY, document.get("gamer_ID"));
+                                CollectionReference newmatch = mFirestore.collection("users/" + username + "/gamer_profiles/" + game + "/matches");
+                                newmatch.document(currentMatch.getId()).set(newProfile).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                        mDialog.setMessage( "Gamer ID: "+gamerID);
 
 
-                        if (document.exists()) {
-
-                            newProfile.put(Globals.GAMERID_KEY, document.get("gamer_ID"));
-                            CollectionReference newmatch = mFirestore.collection("users/" + username + "/gamer_profiles/" + game + "/matches");
-                            newmatch.document(currentMatch.getId()).set(newProfile).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-
-                                    mDialog.setMessage("Player " + currentMatch.getId() + " added to your matches!");
+                                        mDialog.setCancelable(true);
+                                        matches.remove(currentMatch);
 
 
-                                    mDialog.setCancelable(true);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(HomeScreenMatches.this.getActivity(), "Something went wrong, Please try again later." + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
 
 
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(HomeScreenMatches.this.getActivity(), "Something went wrong, Please try again later." + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                                }
-                            });
-
-
-                        }
+                            }
                     }
 
                 }
@@ -285,8 +293,8 @@ public class HomeScreenMatches extends Fragment {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 mDialog = new ProgressDialog(HomeScreenMatches.this.getActivity());
-                mDialog.setMessage("getting user data");
-                mDialog.show();
+              //  mDialog.setMessage("getting user data");
+                //mDialog.show();
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {

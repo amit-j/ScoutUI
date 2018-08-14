@@ -68,6 +68,7 @@ public class HomeScreenProfile extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home_screen_profile, container, false);
 
         btnLookForMatches =  rootView.findViewById(R.id.btnLookForMatches);
+        btnLookForMatches.setVisibility(View.INVISIBLE);
          txtPlayerRatingValue = rootView.findViewById(R.id.overAllRatingValue);
          btnChangeGame=rootView.findViewById(R.id.btnChangeGame);
          btnLogOut=rootView.findViewById(R.id.btnLogOut);
