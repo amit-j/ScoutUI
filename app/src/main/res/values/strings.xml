@@ -55,6 +55,7 @@
     <string name="ratePlayerInfo">Rate Players</string>
     <string name="ratePlayerName">James Bond</string>
     <string name="ratePlayerName2">Jason</string>
+    <string name="submit_rating">Submit Rating</string>
 
 
     <string-array name="age_groups">
