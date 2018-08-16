@@ -39,6 +39,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -59,6 +61,7 @@ public class HomeScreenRating extends Fragment {
 
 
          listView =  rootView.findViewById(R.id.mobile_list);
+         game = HomeScreenRating.this.getActivity().getIntent().getStringExtra("gamename");
         getMatches();
 
 
@@ -126,6 +129,7 @@ public class HomeScreenRating extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent i = new Intent(HomeScreenRating.this.getActivity(), HomeScreenRatePlayer.class);
+                    i.putExtra("gamename",game);
                     startActivity(i);
                 }
             });
