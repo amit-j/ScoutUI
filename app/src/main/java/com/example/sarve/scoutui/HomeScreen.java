@@ -1,4 +1,5 @@
 package com.example.sarve.scoutui;
+/*home screen-includes the adapters for page layout and the three fragments */
 
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;

@@ -53,19 +53,19 @@ public class SignIn extends AppCompatActivity {
             public void onClick(View view) {
 
                  mDialog = new ProgressDialog(SignIn.this);
-                mDialog.setMessage("Logging in..");
+                mDialog.setMessage("Logging in..");// dialog box showing that user is logging in
                 mDialog.setProgress(0);
 
                 mDialog.show();
 
-                final DocumentReference docRef = mFirestore.collection("users").document(editPhone.getText().toString());
+                final DocumentReference docRef = mFirestore.collection("users").document(editPhone.getText().toString());//getting phone number field from collection users
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if(task.isSuccessful())
                         {
-                            DocumentSnapshot document = task.getResult();
-                            if(document.exists())
+                            DocumentSnapshot document = task.getResult();//storing all the documents
+                            if(document.exists())//if they exist
                             {
                                 DocumentReference pref = mFirestore.collection("users").document(editPhone.getText().toString());
                                 pref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -73,7 +73,7 @@ public class SignIn extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                         if(task.isSuccessful())
                                         {
-                                            DocumentSnapshot pwd = task.getResult();
+                                            DocumentSnapshot pwd = task.getResult();//password authentication
                                             if(pwd.exists() && pwd.get("password").equals(editPassword.getText().toString()))  //fixed the sign in bug and verified passwords correct data : amit J
                                             {
 
@@ -86,7 +86,7 @@ public class SignIn extends AppCompatActivity {
                                                 SharedPreferences prefs = getSharedPreferences(Globals.SCOUT_PREFERENCENAME, MODE_PRIVATE);
                                                 String restoredText = prefs.getString("username",null);
 
-                                                Intent i = new Intent(SignIn.this,ChooseGame.class);
+                                                Intent i = new Intent(SignIn.this,ChooseGame.class);//after succesful sign-in, go to choose game activity
                                                 startActivity(i);
                                                 //Toast.makeText(SignIn.this,"pwd correct",Toast.LENGTH_SHORT).show();
                                             }

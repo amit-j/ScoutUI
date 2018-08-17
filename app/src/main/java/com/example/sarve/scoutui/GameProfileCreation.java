@@ -1,3 +1,4 @@
+/*Activity for home profile creation*/
 package com.example.sarve.scoutui;
 
 import android.app.ProgressDialog;
@@ -52,7 +53,7 @@ public class GameProfileCreation extends AppCompatActivity {
         setContentView(R.layout.activity_game_profile_creation);
 
          mDialog = new ProgressDialog(GameProfileCreation.this);
-        mDialog.setMessage("Please wait while we set things up");
+        mDialog.setMessage("Please wait while we set things up");//dialog box showing some info
         mDialog.setProgress(0);
 
         mDialog.show();
@@ -62,8 +63,8 @@ public class GameProfileCreation extends AppCompatActivity {
 
         imgGameImage = findViewById(R.id.imgGameImage);
 
-        gameName = getIntent().getStringExtra("gamename");
-        if(gameName.equals("pubg")){
+        gameName = getIntent().getStringExtra("gamename");/*retrieves gamename */
+        if(gameName.equals("pubg")){/*checks the gamename and displays that particular image and text accordingly*/
             imgGameImage.setImageResource(R.mipmap.pubg);
             txtGameName.setText("PUBG");
         }
@@ -73,11 +74,11 @@ public class GameProfileCreation extends AppCompatActivity {
         }
 
 
-        userName =getUserName();
+        userName =getUserName();//gets username
 
 
 
-        doesProfileAlreadyExist(gameName);
+        doesProfileAlreadyExist(gameName);//checks if profile already exists for the particular game
 
 
 
@@ -88,7 +89,7 @@ public class GameProfileCreation extends AppCompatActivity {
 
 
         btnCreateGameProfile = findViewById(R.id.btnCreateGameProfile);
-
+/*drop downs for each of the preferences in game profile creation screen*/
         spinnerAgeGroup = findViewById(R.id.preferredAgeGroupSpinner);
         fillSpinner(spinnerAgeGroup,"age");
 
@@ -105,14 +106,13 @@ public class GameProfileCreation extends AppCompatActivity {
             @Override
             public void onClick(View view){
 
-                if(validateScreen()) {
+                if(validateScreen()) {/*to check if gamerID is being entered or not*/
                     ProgressDialog progressBar = new ProgressDialog(GameProfileCreation.this);
                     progressBar.setMessage("Saving your profile.");
                     progressBar.show();
                     progressBar.setProgress(0);
                     saveProfile();
                     progressBar.setProgress(100);
-
                 }
                 else
                     Toast.makeText(getBaseContext(), "Please enter a gamerID to be saved to your profile.",    Toast.LENGTH_SHORT).show();
@@ -125,7 +125,7 @@ public class GameProfileCreation extends AppCompatActivity {
 
 
 
-    private void doesProfileAlreadyExist(String gameName){
+    private void doesProfileAlreadyExist(String gameName){/*check if profile exists or not*/
         CollectionReference gameProfile = mFirestore.collection("users");
         Task snapshot = gameProfile.document(userName + "/gamer_profiles/"+gameName).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -162,7 +162,7 @@ public class GameProfileCreation extends AppCompatActivity {
 
     private boolean validateScreen(){
 
-        MaterialEditText edtgamerID = findViewById(R.id.gamerID);
+        MaterialEditText edtgamerID = findViewById(R.id.gamerID);/*gamerID is entered or not*/
         if(edtgamerID.getText().toString().trim().isEmpty())
             return false;
 
@@ -170,7 +170,7 @@ public class GameProfileCreation extends AppCompatActivity {
     }
 
 
-    private void saveProfile(){
+    private void saveProfile(){/*stores the gamer profile details into database*/
         boolean isSuccessful;
         try {
             String gamerID;
@@ -238,7 +238,7 @@ public class GameProfileCreation extends AppCompatActivity {
 
 
 
-    private void createRankings(){
+    private void createRankings(){/*assigns the default ratings for the gamer's profile*/
         boolean isSuccessful;
         try {
 
@@ -292,7 +292,7 @@ public class GameProfileCreation extends AppCompatActivity {
 
     }
 
-
+/*function that takes to home screen*/
     private void goToHomeScreen(){
         Intent homeScreen = new Intent(GameProfileCreation.this,HomeScreen.class);
         homeScreen.putExtra("gamename",gameName);

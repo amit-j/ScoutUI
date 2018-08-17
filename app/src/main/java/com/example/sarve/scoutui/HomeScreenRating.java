@@ -1,5 +1,5 @@
 package com.example.sarve.scoutui;
-
+//HOME SCREEN RATING FRAGMENT
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
@@ -61,7 +61,7 @@ public class HomeScreenRating extends Fragment {
 
 
          listView =  rootView.findViewById(R.id.mobile_list);
-         game = HomeScreenRating.this.getActivity().getIntent().getStringExtra("gamename");
+         game = HomeScreenRating.this.getActivity().getIntent().getStringExtra("gamename");/*gets the game name*/
         getMatches();
 
 
@@ -71,15 +71,14 @@ public class HomeScreenRating extends Fragment {
     }
 
 
-    private void getMatches(){
+    private void getMatches(){/*gets the matched players data */
 
         CollectionReference collection = mFirestore.collection("users/"+getUserName()+"/gamer_profiles/"+game+"/matches");
-        Query q = collection.limit(25);
-
+        Query q = collection.limit(25);//limiting the query to show only 25 matches
         q.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot snapshots) {
-                matches = new ArrayList<>(snapshots.getDocuments());
+                matches = new ArrayList<>(snapshots.getDocuments());/*storing the documents into the arraylist*/
                 CustomAdapter customAdapter = new CustomAdapter();
                 listView.setAdapter(customAdapter);
                 customAdapter.notifyDataSetChanged();
@@ -93,15 +92,15 @@ public class HomeScreenRating extends Fragment {
     }
 
 
-    private String getUserName(){
+    private String getUserName(){/*gets the user name */
         SharedPreferences prefs = this.getActivity().getSharedPreferences(Globals.SCOUT_PREFERENCENAME, MODE_PRIVATE);
         String restoredText = prefs.getString("username",null);
         return restoredText ;
     }
 
-    class  CustomAdapter extends BaseAdapter{
+    class  CustomAdapter extends BaseAdapter{/*writing a custom adapter*/
         @Override
-        public int getCount(){
+        public int getCount(){/*to check the count of matches*/
             if(matches == null)
                 return 0;
             return matches.size();
@@ -127,7 +126,7 @@ public class HomeScreenRating extends Fragment {
             Button rateButton = view.findViewById(R.id.button);
             rateButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View view) {/*intent to go to the activity where the user can rate the particular player*/
                     Intent i = new Intent(HomeScreenRating.this.getActivity(), HomeScreenRatePlayer.class);
                     i.putExtra("gamename",game);
                     startActivity(i);

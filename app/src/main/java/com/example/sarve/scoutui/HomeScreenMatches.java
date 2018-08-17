@@ -1,3 +1,6 @@
+/*the  second fragment in the home screen
+* 1.shows the matches
+* 2.user can switch b/w matches and request for gamer ID*/
 package com.example.sarve.scoutui;
 
 import android.app.ProgressDialog;
@@ -91,10 +94,10 @@ public class HomeScreenMatches extends Fragment {
         matchCamper = (EditText) rootView.findViewById(R.id.matchCamperValue);
         matchStriker = (EditText) rootView.findViewById(R.id.matchStrikerValue);
         matchLanguage = (EditText) rootView.findViewById(R.id.matchLanguageValue);
-        getPlayerData();
+        getPlayerData();//calls the fucntion
 
 
-
+/*buttons for previous, next and show gamer ID*/
         btnShowGamerID.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,7 +148,7 @@ public class HomeScreenMatches extends Fragment {
     }
 
 
-    private void saveMatches() {
+    private void saveMatches() {//saves the matches into database
         try {
             final Map<String, Object> newProfile = new HashMap<>();
             newProfile.put("has_been_rated", false);
@@ -158,24 +161,21 @@ public class HomeScreenMatches extends Fragment {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                    if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
+                    if (task.isSuccessful()) {/**/
+                            DocumentSnapshot document = task.getResult();/*retrieves the documents AND fields from the database into the document snapshot*/
 
-                            final String gamerID=    document.get("gamer_ID").toString();
+                            final String gamerID = document.get("gamer_ID").toString();
                             if (document.exists()) {
 
-                                newProfile.put(Globals.GAMERID_KEY, document.get("gamer_ID"));
+                                newProfile.put(Globals.GAMERID_KEY, document.get("gamer_ID"));//creates a document in users/'username'/gamer_profiles/'game'/matches
                                 CollectionReference newmatch = mFirestore.collection("users/" + username + "/gamer_profiles/" + game + "/matches");
                                 newmatch.document(currentMatch.getId()).set(newProfile).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
 
-                                        mDialog.setMessage( "Gamer ID: "+gamerID);
-
-
+                                        mDialog.setMessage( "Gamer ID: "+gamerID);//displays the gamerID
                                         mDialog.setCancelable(true);
                                       //  matches.remove(currentMatch);
-
 
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -204,7 +204,7 @@ public class HomeScreenMatches extends Fragment {
 
     private void getdata() {
 
-        mDialog = new ProgressDialog(HomeScreenMatches.this.getActivity());
+        mDialog = new ProgressDialog(HomeScreenMatches.this.getActivity());//dialog box to indicate that its loading(fetching)
         mDialog.setMessage("Please wait while we set things up");
         mDialog.setProgress(0);
 
@@ -213,21 +213,22 @@ public class HomeScreenMatches extends Fragment {
 
 
 
-        CollectionReference collection = mFirestore.collection("user_rankings/" + game + "/rankings");
-        Query q = collection.whereGreaterThan("player_rating", mPlayerRating - 10).whereLessThan("player_rating", mPlayerRating + 10);
+        CollectionReference collection = mFirestore.collection("user_rankings/" + game + "/rankings");//in rankings
+        Query q = collection.whereGreaterThan("player_rating", mPlayerRating - 10).whereLessThan("player_rating", mPlayerRating + 10);//querying for profiles whose ratings are within a difference of 10
+        /*for example: if a player has a rating of 90, profile whose ratings are within range of 80-100 are shown as matches to the user*/
         q.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot snapshots) {
-                matches = new ArrayList<>(snapshots.getDocuments());
+                matches = new ArrayList<>(snapshots.getDocuments());//stores the documents fetched into an array list
                 matchesIterator = matches.listIterator();
-                if (matchesIterator.hasNext()) {
+                if (matchesIterator.hasNext()) {/*iterator to show each match*/
 
-                    currentMatch = matchesIterator.next();
-                    matchOverAllRating.setText(currentMatch.get("player_rating").toString());
+                    currentMatch = matchesIterator.next();//show next match
+                    matchOverAllRating.setText(currentMatch.get("player_rating").toString());/*different kinds of ratings of that particular user*/
                     matchTeamPlayer.setText(currentMatch.get("rank_var_1_avg").toString());
                     matchCamper.setText(currentMatch.get("rank_var_2_avg").toString());
                     matchStriker.setText(currentMatch.get("rank_var_3_avg").toString());
-                    displayProfileData(currentMatch.getId().toString());
+                    displayProfileData(currentMatch.getId().toString());//displaying the data on the xml layout
 
 
 
@@ -240,7 +241,7 @@ public class HomeScreenMatches extends Fragment {
     }
 
 
-    private void getNextMatch() {
+    private void getNextMatch() {//show the next match's ratings and details
         if (matchesIterator.hasNext()) {
 
             currentMatch = matchesIterator.next();
@@ -258,7 +259,7 @@ public class HomeScreenMatches extends Fragment {
         }
     }
 
-    private void getPreviousMatch() {
+    private void getPreviousMatch() {/*show the previous match's details and ratings*/
         if (matchesIterator.hasPrevious()) {
 
             currentMatch = matchesIterator.previous();
@@ -275,21 +276,21 @@ public class HomeScreenMatches extends Fragment {
         }
     }
 
-    private String getUserName() {
+    private String getUserName() {/*retrieves the username of the current user from the database*/
         SharedPreferences prefs = this.getActivity().getSharedPreferences(Globals.SCOUT_PREFERENCENAME, MODE_PRIVATE);
         String restoredText = prefs.getString("username", null);
         return restoredText;
     }
 
-    private void setmatchdata() {
+    /*private void setmatchdata() {
 
-    }
+    }*/
 
-    private void getPlayerData() {
+    private void getPlayerData() {/*extracting the data from firestore(username and gamename)*/
         username = getUserName();
         game = HomeScreenMatches.this.getActivity().getIntent().getStringExtra("gamename");
 
-        CollectionReference collection = mFirestore.collection("user_rankings/" + game + "/rankings");
+        CollectionReference collection = mFirestore.collection("user_rankings/" + game + "/rankings");//in user_rankings/'game'/rankinngs
         collection.document(username).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -298,7 +299,7 @@ public class HomeScreenMatches extends Fragment {
                 //mDialog.show();
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
+                    if (document.exists()) {//player rating assigned to mPlayerRating
                         mPlayerRating = Integer.parseInt(document.get("player_rating").toString());
                     } else {
                         Toast.makeText(HomeScreenMatches.this.getActivity(), "Error reading player ratings.",
@@ -314,7 +315,7 @@ public class HomeScreenMatches extends Fragment {
     }
 
 
-    private void displayProfileData(final String uname) {
+    private void displayProfileData(final String uname) {/*fetch the profile data from firestore and display on the xml layout file*/
 
         CollectionReference collection = mFirestore.collection("users/" + uname + "/gamer_profiles");
         collection.document(game).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -369,7 +370,7 @@ public class HomeScreenMatches extends Fragment {
     }
 
 
-    private String checkNull(Object o) {
+    private String checkNull(Object o) {/*making sure that null values are not entered*/
         if (o == null)
             return "";
         else

@@ -1,3 +1,5 @@
+/* file containing variables to access the database which can be accessed from any activity
+* This helps prevent unnecessary declaration of variables in every activity*/
 package com.example.sarve.scoutui.Model;
 
 public class Globals {

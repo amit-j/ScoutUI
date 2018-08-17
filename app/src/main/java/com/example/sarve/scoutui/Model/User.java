@@ -1,5 +1,5 @@
 package com.example.sarve.scoutui.Model;
-
+/*the global file containing the default constructors and parameterized constructors dealing with username and password */
 public class User {
     private String name;
     private String password;

@@ -18,7 +18,7 @@ public class InitialSetup extends AppCompatActivity {
 
         btnLetsGo.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view){
+            public void onClick(View view){/*intent to go the choose game screen from intital setup activity*/
                 Intent letsGo = new Intent(InitialSetup.this,ChooseGame.class);
                 startActivity(letsGo);
             }

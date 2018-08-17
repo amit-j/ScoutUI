@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnSignUp.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view){
+            public void onClick(View view){/*goes to signup activity*/
                 Intent signUp = new Intent(MainActivity.this,SignUp.class);
                 startActivity(signUp);
             }
@@ -48,13 +48,13 @@ public class MainActivity extends AppCompatActivity {
 
         btnSignIn.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view){
+            public void onClick(View view){/*goes to signin activity*/
                 Intent signIn = new Intent(MainActivity.this,SignIn.class);
                 startActivity(signIn);
             }
         });
 
-        auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();//authenticating with firebase
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

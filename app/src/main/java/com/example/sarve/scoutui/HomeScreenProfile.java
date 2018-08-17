@@ -1,4 +1,5 @@
 package com.example.sarve.scoutui;
+/*HOME SCREEN PROFILE FRAGMENT*/
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -80,8 +81,8 @@ public class HomeScreenProfile extends Fragment {
         gamePicture = rootView.findViewById(R.id.imgGameImage);
 
 
-        username = getUserName();
-       //
+        username = getUserName();//retrieve username from the database
+       //setting the name and image of the game
        mFirestore = FirebaseFirestore.getInstance();
         game= HomeScreenProfile.this.getActivity().getIntent().getStringExtra("gamename");
         txtGamename.setText(game.toUpperCase());
@@ -110,7 +111,7 @@ public class HomeScreenProfile extends Fragment {
 
         btnChangeGame.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {//intent to go to the choose game screen
                 Intent i = new Intent(HomeScreenProfile.this.getActivity(), ChooseGame.class);
                 startActivity(i);
             }
@@ -118,14 +119,14 @@ public class HomeScreenProfile extends Fragment {
 
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {//intent to log out
                 Intent i = new Intent(HomeScreenProfile.this.getActivity(), MainActivity.class);
                 startActivity(i);
 
             }
         });
 
-        btnLookForMatches.setOnClickListener(new View.OnClickListener() {
+        btnLookForMatches.setOnClickListener(new View.OnClickListener() {//look for matches
             @Override
             public void onClick(View view) {
 

@@ -1,4 +1,6 @@
+/*This is the rate player activity which is shown when the user clicks the rate player button beside the player. */
 package com.example.sarve.scoutui.Model;
+
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sarve.scoutui.GameProfileCreation;
+import com.example.sarve.scoutui.Model.Globals;
 import com.example.sarve.scoutui.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -59,14 +62,14 @@ public class HomeScreenRatePlayer extends AppCompatActivity {
         txtGameName.setText(getIntent().getStringExtra("gamename"));
         game =getIntent().getStringExtra("gamename");
         ImageView imgGameImagae = findViewById(R.id.imgGameImage_rating);
-        if(game.equals("pubg")){
+        if(game.equals("pubg")){/*setting the image for the particular game in the rate screen*/
             imgGameImagae.setImageResource(R.mipmap.pubg);
         }
         else{
             imgGameImagae.setImageResource(R.mipmap.fortnite);
         }
 
-        Button btnSubmit = findViewById(R.id.btnSubmitRating_rating);
+        Button btnSubmit = findViewById(R.id.btnSubmitRating_rating);/*button for submitting the rating of the selected player after selecting the preferences*/
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +110,7 @@ public class HomeScreenRatePlayer extends AppCompatActivity {
 
 
 
-    private String getUserName(){
+    private String getUserName(){/* function to get the particular client's username*/
         SharedPreferences prefs = getSharedPreferences(Globals.SCOUT_PREFERENCENAME, MODE_PRIVATE);
         String restoredText = prefs.getString("username",null);
         return restoredText ;

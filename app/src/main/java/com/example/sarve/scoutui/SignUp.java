@@ -48,6 +48,7 @@ public class SignUp extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*storing the text in the signup fields into the database upon button click*/
 
 
                 final ProgressDialog mDialog = new ProgressDialog(SignUp.this);
@@ -71,7 +72,7 @@ public class SignUp extends AppCompatActivity {
                 mFirestore.collection("users").document(editPhone.getText().toString()).set(userMap)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onSuccess(Void aVoid) {
+                            public void onSuccess(Void aVoid) {//creating a document for each profile
 
                                 //adding usernames to the shared preference so we can access it later : amit J
                                 SharedPreferences.Editor editor = getSharedPreferences(Globals.SCOUT_PREFERENCENAME, MODE_PRIVATE).edit();
