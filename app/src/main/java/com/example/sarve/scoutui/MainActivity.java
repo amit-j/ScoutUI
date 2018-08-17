@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        auth = FirebaseAuth.getInstance();//authenticating with firebase
+        auth = FirebaseAuth.getInstance();//getting instance with firebase
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

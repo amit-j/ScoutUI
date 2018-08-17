@@ -1,4 +1,4 @@
-/*This is the rate player activity which is shown when the user clicks the rate player button beside the player. */
+/*This is the rate player activity which is shown when the user clicks the rate player button beside the playername in the homescreenrating activity. */
 package com.example.sarve.scoutui.Model;
 
 
@@ -60,7 +60,7 @@ public class HomeScreenRatePlayer extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen_rate_player);
         TextView txtGameName = findViewById(R.id.gamename_rating);
         txtGameName.setText(getIntent().getStringExtra("gamename"));
-        game =getIntent().getStringExtra("gamename");
+        game = getIntent().getStringExtra("gamename");//getting string
         ImageView imgGameImagae = findViewById(R.id.imgGameImage_rating);
         if(game.equals("pubg")){/*setting the image for the particular game in the rate screen*/
             imgGameImagae.setImageResource(R.mipmap.pubg);
@@ -72,7 +72,7 @@ public class HomeScreenRatePlayer extends AppCompatActivity {
         Button btnSubmit = findViewById(R.id.btnSubmitRating_rating);/*button for submitting the rating of the selected player after selecting the preferences*/
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {/*dialog box showing that the rating has been submitted*/
                 ProgressDialog mDialog = new ProgressDialog(HomeScreenRatePlayer.this);
                 mDialog.setMessage("Rating Submitted!");
                 mDialog.show();

@@ -118,7 +118,7 @@ public class HomeScreen extends AppCompatActivity {
 
                     );
                     return tabMatches;
-                case 2:
+                   case 2:
                     HomeScreenRating tabRating = new HomeScreenRating();
                     return tabRating;
                 default:

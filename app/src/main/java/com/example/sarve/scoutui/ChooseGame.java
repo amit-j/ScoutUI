@@ -1,4 +1,4 @@
-/*Activity to choose a game(pubg or fortnite)*/
+/*Activity where the user has to choose a game(pubg or fortnite)*/
 package com.example.sarve.scoutui;
 
 import android.content.Intent;

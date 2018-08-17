@@ -130,11 +130,11 @@ public class GameProfileCreation extends AppCompatActivity {
         Task snapshot = gameProfile.document(userName + "/gamer_profiles/"+gameName).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
+                if (task.isSuccessful()) {/* gamename documents are retrieved*/
                     DocumentSnapshot document = task.getResult();
 
 
-                    if (document.exists()) {
+                    if (document.exists()) {/*if the particular game profile already exists. then go to home screen*/
                         goToHomeScreen();
                     }
                     else{
@@ -177,7 +177,7 @@ public class GameProfileCreation extends AppCompatActivity {
             String ageGroup;
             String Language;
             String availableTime;
-
+/*drop downs for preferred language, time, age group*/
             MaterialEditText edtgamerID = findViewById(R.id.gamerID);
             gamerID = edtgamerID.getText().toString();
 
@@ -204,7 +204,7 @@ public class GameProfileCreation extends AppCompatActivity {
             gameProfile.document(userName + "/gamer_profiles/"+gameName).set(newProfile)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(Void aVoid) {
+                        public void onSuccess(Void aVoid) {/*stores all the map data into firestore*/
                             Toast.makeText(GameProfileCreation.this, "Profile saved.",
                                     Toast.LENGTH_SHORT).show();
                             createRankings();

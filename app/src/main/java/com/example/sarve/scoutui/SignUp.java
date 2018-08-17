@@ -1,5 +1,5 @@
 package com.example.sarve.scoutui;
-
+//SIGN UP ACTIVITY
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -61,7 +61,7 @@ public class SignUp extends AppCompatActivity {
                 String phone = editPhone.getText().toString();
                 String password = editPassword.getText().toString();
 
-                Map<String, String> userMap = new HashMap<>();
+                Map<String, String> userMap = new HashMap<>();//STORING THEM IN HASHMAP
 
                 userMap.put("name",name);
                 userMap.put("phone",phone);

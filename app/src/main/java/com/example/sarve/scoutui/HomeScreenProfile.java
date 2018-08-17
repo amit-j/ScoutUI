@@ -83,7 +83,7 @@ public class HomeScreenProfile extends Fragment {
 
         username = getUserName();//retrieve username from the database
        //setting the name and image of the game
-       mFirestore = FirebaseFirestore.getInstance();
+       mFirestore = FirebaseFirestore.getInstance();//firestore instantiation
         game= HomeScreenProfile.this.getActivity().getIntent().getStringExtra("gamename");
         txtGamename.setText(game.toUpperCase());
 
@@ -172,14 +172,14 @@ public class HomeScreenProfile extends Fragment {
         CollectionReference collection = mFirestore.collection("user_rankings/"+game+"/rankings");
         collection.document(username).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {/*retrieve documents from rankings */
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
 
 
                     if (document.exists()) {
 
-
+/*Show the documents in xml*/
                         txtPlayerRatingValue.setText(document.get("player_rating").toString());
                         txtRatingOneValue.setText(document.get("rank_var_1_avg").toString());
                         txtRatingTwoValue.setText(document.get("rank_var_2_avg").toString());

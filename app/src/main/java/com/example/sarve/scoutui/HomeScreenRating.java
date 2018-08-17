@@ -100,7 +100,7 @@ public class HomeScreenRating extends Fragment {
 
     class  CustomAdapter extends BaseAdapter{/*writing a custom adapter*/
         @Override
-        public int getCount(){/*to check the count of matches*/
+        public int getCount(){/*check the count of matches*/
             if(matches == null)
                 return 0;
             return matches.size();
@@ -132,7 +132,7 @@ public class HomeScreenRating extends Fragment {
                     startActivity(i);
                 }
             });
-            playerName.setText(matches.get(i).get("gamer_ID").toString());
+            playerName.setText(matches.get(i).get("gamer_ID").toString()); //displaying gamerID in layout
             return view;
         }
 

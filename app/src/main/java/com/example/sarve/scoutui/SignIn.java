@@ -1,5 +1,5 @@
 package com.example.sarve.scoutui;
-
+/*SIGN IN ACTIVITY*/
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
